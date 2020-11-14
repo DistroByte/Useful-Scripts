@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#
+# needs to be run on a Unix based system that has bash
+# please create a file called 'password.txt' and 'username.txt' and reference them below
+#
+
 password=$(< ../password.txt)
 user=$(< ../username.txt)
 read labsheet
