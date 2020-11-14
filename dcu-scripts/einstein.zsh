@@ -20,34 +20,10 @@
 #
 # You might have to provide your password (but you should only have to do that once).
 #
-# IMPORTANT:
-#   The script needs to know your username on Einstein.  On SoC servers, that's trivial,
-#   because it's just $( whoami ).  If you're running this elsewhere, though, your local
-#   username might not match your SoC username.
-#
-# In that case, either:
-#   1) set the EINSTEIN_USERNAME variable in your ~/.bashrc,
-#      (SOC_USERNAME works too),
-#   2) or just hard wire your SoC username below, like this:
-#      username=MY_LOCAL_USERNAME
-#
-# if [[ -n $EINSTEIN_USERNAME ]]
-# then
-#    username=$EINSTEIN_USERNAME
-# elif [[ -n $SOC_USERNAME ]]
-# then
-#    username=$SOC_USERNAME
-# else
 username=hacketj5
-# fi
 
 #
 # Requirements: zsh, curl and sha1sum.
-#
-# Lecturers only...
-# For installing expected standard output: nodejs and CoffeeScript:
-#
-#    $ sudo npm install -g coffee-script
 #
 
 # "sha1sum" is apparently known as "shasum" on MacOS.
