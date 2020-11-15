@@ -11,7 +11,7 @@ Capslock::Shift
 
 #IfWinActive 
   ~F24::
-    FileRead, key, C:\Users\James\Documents\Useful Scripts\Luamacros\keypressed.txt
+    FileRead, key, "C:\Users\James\Documents\Useful Scripts\2nd-keyboard\keypressed.txt"
     if (key = "c") { ; open calculator
       if !WinExist("Calculator") {
         Run, calc.exe
@@ -34,6 +34,18 @@ Capslock::Shift
       Send, ^+!J
       Return
     }
+    if (key = "p") {
+      WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+      WebRequest.Open("GET", "http://ip.jsontest.com/")
+      WebRequest.Send()
+      FileRead, oldIP, ./ip.txt
+      if (oldIP != WebRequest.ResponseText) {
+        FileDelete, ./ip.txt
+        FileAppend, WebRequest.ResponseText, ./ip.txt
+      }
+      WebRequest := ""
+      Return
+    }
     if (key = "s") { ; search with google
       Send, ^c
       Sleep 100
@@ -41,7 +53,7 @@ Capslock::Shift
       Return
     }
     if (key = "z") { ; echo file contents of einstein bash checker
-      FileRead, stat, C:\Users\James\Documents\Useful Scripts\online.txt
+      FileRead, stat, C:\Users\James\Documents\Useful Scripts\dcu-scripts\online.txt
       MsgBox, %stat%
     }
     if (WinActive("ahk_id 0x207e4")) { ; shortcuts for Opera

@@ -18,7 +18,7 @@ lmc_minimize()
 
 sendToAHK = function(key)
     local file = io.open(
-                     "C:\\Users\\James\\Documents\\Useful Scripts\\Luamacros\\keypressed.txt",
+                     "C:\\Users\\James\\Documents\\Useful Scripts\\2nd-keyboard\\keypressed.txt",
                      "w")
     file:write(key)
     file:flush()
