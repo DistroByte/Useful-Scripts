@@ -11,7 +11,7 @@ Capslock::Shift
 
 #IfWinActive 
   ~F24::
-    FileRead, key, "C:\Users\James\Documents\Useful Scripts\2nd-keyboard\keypressed.txt"
+    FileRead, key, C:\Users\James\Documents\Useful Scripts\2nd-keyboard\keypressed.txt
     if (key = "c") { ; open calculator
       if !WinExist("Calculator") {
         Run, calc.exe
@@ -38,10 +38,13 @@ Capslock::Shift
       WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
       WebRequest.Open("GET", "http://ip.jsontest.com/")
       WebRequest.Send()
+      newIP := WebRequest.ResponseText
       FileRead, oldIP, ./ip.txt
-      if (oldIP != WebRequest.ResponseText) {
+      MsgBox, % oldIP newIP
+      if (oldIP != newIP) {
         FileDelete, ./ip.txt
-        FileAppend, WebRequest.ResponseText, ./ip.txt
+        FileAppend, % newIP, ./ip.txt
+        MsgBox,, IP Changed!, % newIP,
       }
       WebRequest := ""
       Return
@@ -56,7 +59,7 @@ Capslock::Shift
       FileRead, stat, C:\Users\James\Documents\Useful Scripts\dcu-scripts\online.txt
       MsgBox, %stat%
     }
-    if (WinActive("ahk_id 0x207e4")) { ; shortcuts for Opera
+    if (WinActive("ahk_exe opera.exe")) { ; shortcuts for Opera
       if (key = "num0") { ; opens workspace 1
         Send, +^1
         Return
@@ -73,28 +76,45 @@ Capslock::Shift
         Send, +^4
         Return
       }
+      if (key = "d") {
+        Send, ^+.
+        Return
+      }
+      if (key = "l") { ; log in to DCU
+        FileRead, pword, ..\password.txt
+        FileRead, uname, ..\username.txt
+        Sleep, 200
+        Send, {Text}%uname%
+        Sleep, 50
+        Send, {Tab}
+        Sleep, 200
+        Send, {Text}%pword%
+        Sleep, 50
+        Send, {Enter}
+        Return
+      }
     }
-    ; if (WinActive("ahk_id 0x170614")) { ; shortcuts for VSCode
-    if (key = "l") { ; log in to DCU
-      FileRead, pword, ..\password.txt
-      FileRead, uname, ..\username.txt
-      Sleep, 200
-      Send, {Text}%uname%
-      Sleep, 50
-      Send, {Enter}
-      Sleep, 200
-      Send, {Text}%pword%
-      Sleep, 50
-      Send, {Enter}
-      Return
+    if (WinActive("ahk_exe Code.exe")) { ; shortcuts for VSCode
+      if (key = "l") { ; log in to DCU
+        FileRead, pword, ..\password.txt
+        FileRead, uname, ..\username.txt
+        Sleep, 200
+        Send, {Text}%uname%
+        Sleep, 50
+        Send, {Enter}
+        Sleep, 200
+        Send, {Text}%pword%
+        Sleep, 50
+        Send, {Enter}
+        Return
+      }
+      if (key = "u") { ; upload to Einstein
+        Send, ^k
+        Sleep, 50
+        Send, ^!u
+        Return
+      }
     }
-    if (key = "u") { ; upload to Einstein
-      Send, ^k
-      Sleep, 50
-      Send, ^!u
-      Return
-    }
-    ; }
     if (key = "numMinus") { ; gets active window
       WinGetClass, class, A
       MsgBox, The active window's class is "%class%".
