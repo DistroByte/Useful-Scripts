@@ -1,5 +1,5 @@
 clear()
-local keyboardIdentifier = '1E43E403'
+local keyboardIdentifier = '19F2EB28'
 
 if keyboardIdentifier == '0000AAA' then
     lmc_assign_keyboard('MACROS');
