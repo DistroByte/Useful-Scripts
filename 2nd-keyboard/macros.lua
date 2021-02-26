@@ -1,5 +1,5 @@
 clear()
-local keyboardIdentifier = '19F2EB28'
+local keyboardIdentifier = '3ADE3CC9'
 
 if keyboardIdentifier == '0000AAA' then
     lmc_assign_keyboard('MACROS');
@@ -126,14 +126,16 @@ local config = {
 }
 
 lmc_set_handler('MACROS', function(button, direction)
-    if (direction == 0) then return end
-    if type(config[button]) == "string" then
-        print(' ')
-        print('Your key ID number is:   ' .. button)
-        print('It was assigned string:    ' .. config[button])
-        sendToAHK(config[button])
-    else
-        print(' ')
-        print('Not yet assigned: ' .. button)
-    end
+	--Ignoring upstrokes ensures keystrokes are not registered twice, but activates faster than ignoring downstrokes. It also allows press and hold behaviour
+        if (direction == 0) then return end -- ignore key upstrokes.
+	if type(config[button]) == "string" then
+                print(' ')
+                print('Your key ID number is:   ' .. button)
+				print('It was assigned string:    ' .. config[button])
+				sendToAHK(config[button])
+	else
+                print(' ')
+                print('Not yet assigned: ' .. button)
+	end
 end)
+
