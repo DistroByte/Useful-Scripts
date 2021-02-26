@@ -7,10 +7,10 @@
 
 password=$(< ../password.txt)
 user=$(< ../username.txt)
-read labsheet
+# read labsheet, lab, week
 
 while true; do
-  curl -s --head --user "$user:$password" https://ca116.computing.dcu.ie/labsheet-$labsheet.html head -n 1 > "online.txt"
+  curl -s --head --user "$user:$password" https://ca117.computing.dcu.ie/html/week02/lab01/01_lab.html head -n 1 > "online.txt"
   cat "online.txt" | grep "HTTP"
-  sleep 300
+  sleep 90
 done
