@@ -22,6 +22,22 @@ Capslock::Shift
       }
       Return
     }
+    if (key = "e") { ; open email based on next number: 0 is default
+      Run, thunderbird
+      Return
+    }
+    if (key = "g") { ; open todoist
+      Run, https://todoist.com/app/project/2259364084
+      Return
+    }
+    if (key = "h") { ; open notes
+      Run, https://md.james-hackett.ie/
+      Return
+    }
+    if (key = "j") { ; open todos
+      Run, https://md.james-hackett.ie/gp72FN8oRwKIudvnBhdl_g?both
+      Return
+    }
     if (key = "k") { ; keep window on top
       Winset, Alwaysontop, , A
       Return
@@ -34,52 +50,50 @@ Capslock::Shift
       Send, ^+!J
       Return
     }
-    if (key = "p") {
-      WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-      WebRequest.Open("GET", "http://ip.jsontest.com/")
-      WebRequest.Send()
-      newIP := WebRequest.ResponseText
-      FileRead, oldIP, ./ip.txt
-      MsgBox, % oldIP newIP
-      if (oldIP != newIP) {
-        FileDelete, ./ip.txt
-        FileAppend, % newIP, ./ip.txt
-        MsgBox,, IP Changed!, % newIP,
-      }
-      WebRequest := ""
+    if (key ="q") { ; new chrome tab
+      Run, http://www.google.com
       Return
     }
     if (key = "s") { ; search with google
       Send, ^c
-      Sleep 100
+      Sleep 200
       Run, http://www.google.com/search?q=%clipboard%
       Return
     }
-    if (key = "z") { ; echo file contents of einstein bash checker
-      FileRead, stat, C:\Users\James\Documents\Useful Scripts\dcu-scripts\online.txt
-      MsgBox, %stat%
+    if (key = "t") { ; open semester 2 timetable page
+      Run, https://md.james-hackett.ie/s/cPWKnj0kN
+      Return
     }
-    if (WinActive("ahk_exe opera.exe")) { ; shortcuts for Opera
-      if (key = "num0") { ; opens workspace 1
-        Send, +^1
+    if (key = "v") {
+      Run, C:\Users\James\AppData\Local\Programs\Microsoft VS Code\Code.exe
+      Return
+    }
+    if (key = "w") { ; open incognito
+      Run, cmd.exe
+      Sleep, 200
+      Send, start chrome /incognito{Enter}
+      WinWait, ahk_exe chrome.exe
+      ControlSend,, exit{Enter}, ahk_exe cmd.exe
+      Return
+    }
+    if (key = "x"){ ; useful links
+      Run, https://james-hackett.ie/pages/links/
+      Return
+    }
+    if (WinActive("ahk_exe discord.exe")) {
+      if (key = "p") {
+        WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+        WebRequest.Open("GET", "http://ip.jsontest.com/")
+        WebRequest.Send()
+        newIP := SubStr(WebRequest.ResponseText, 9, -3)
+        FileDelete, ./ip.txt
+        FileAppend, % newIP, ./ip.txt
+        Send, {Text}%newIP%
+        WebRequest := ""
         Return
       }
-      if (key = "num1") { ; opens workspace 2
-        Send, +^2
-        Return
-      }
-      if (key = "num2") { ; opens workspace 3
-        Send, +^3
-        Return
-      }
-      if (key = "num3") { ; opens workspace 4
-        Send, +^4
-        Return
-      }
-      if (key = "d") {
-        Send, ^+.
-        Return
-      }
+    }
+    if (WinActive("ahk_exe chrome.exe")) {
       if (key = "l") { ; log in to DCU
         FileRead, pword, ..\password.txt
         FileRead, uname, ..\username.txt
@@ -95,6 +109,12 @@ Capslock::Shift
       }
     }
     if (WinActive("ahk_exe Code.exe")) { ; shortcuts for VSCode
+      if (key = "d") {
+        Send, ^k
+        Sleep, 50
+        Send, ^!d
+        Return
+      }
       if (key = "l") { ; log in to DCU
         FileRead, pword, ..\password.txt
         FileRead, uname, ..\username.txt
@@ -106,6 +126,10 @@ Capslock::Shift
         Send, {Text}%pword%
         Sleep, 50
         Send, {Enter}
+        Return
+      }
+      if (key = "p") {
+        Send, ca117{Space}
         Return
       }
       if (key = "u") { ; upload to Einstein
