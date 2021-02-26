@@ -9,5 +9,5 @@ Send, {Text}C:\Users\James\Documents\Luamacros\LuaMacros.exe -r "C:\Users\James\
 Sleep, 100
 Send, {Enter}
 Sleep, 100
-WinKill, C:\Windows\SYSTEM32\cmd.exe
+ControlSend,, exit{Enter}, ahk_exe cmd.exe
 Return
