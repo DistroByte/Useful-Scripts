@@ -1,3 +1,10 @@
+
+; This script does not need a second keyboard to run. It uses right alt, or alt gr to determine hotkeys.
+; This does mean that you cannot use regular alt gr functions (like accents etc) on keys that are mapped. 
+
+; The script can be paused at any stage with windows + scrolllock. The same keycombo enables the
+; script again.
+
 #NoEnv
 SendMode Input
 #InstallKeybdHook
