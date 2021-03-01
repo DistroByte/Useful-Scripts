@@ -10,7 +10,7 @@ Capslock::Shift
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.html
 
 #IfWinActive
-<^>!c::
+<^>!c:: ; open calculator
   if !WinExist("Calculator") {
     Run, calc.exe
     WinWait, Calculator
@@ -20,43 +20,33 @@ Capslock::Shift
   }
 Return
 
-<^>!e:: Run, thunderbird
-Return
+<^>!e:: Run, thunderbird ; open email
 
-<^>!g:: Run, https://todoist.com/app/project/2259364084
-Return
+<^>!g:: Run, https://todoist.com/app/project/2259364084 ; open todoist
 
-<^>!h:: Run, https://md.james-hackett.ie/
-Return
+<^>!h:: Run, https://md.james-hackett.ie/ ; open notes
 
-<^>!j:: Run, https://md.james-hackett.ie/gp72FN8oRwKIudvnBhdl_g?both
-Return
+<^>!j:: Run, https://md.james-hackett.ie/gp72FN8oRwKIudvnBhdl_g?both ; open todos
 
-<^>!k:: Winset, Alwaysontop, , A
-Return
+<^>!k:: Winset, Alwaysontop, , A ; keep window on top
 
-<^>!m:: Send, ^+!K
-Return
+<^>!m:: Send, ^+!K ; toggle mute
 
-<^>!n:: Send, ^+!J
-Return
+<^>!n:: Send, ^+!J ; toggle deafen
 
-<^>!q:: Run, http://www.google.com
-Return
+<^>!q:: Run, http://www.google.com ; new chrome tab
 
-<^>!s::
+<^>!s:: ; search with google
   Send, ^c
   Sleep 500
   Run, http://www.google.com/search?q=%clipboard%
 Return
 
-<^>!t:: Run, https://md.james-hackett.ie/s/cPWKnj0kN
-Return
+<^>!t:: Run, https://md.james-hackett.ie/s/cPWKnj0kN ; open semester 2 timetable page
 
-<^>!v:: Run, C:\Users\James\AppData\Local\Programs\Microsoft VS Code\Code.exe
-Return
+<^>!v:: Run, C:\Users\James\AppData\Local\Programs\Microsoft VS Code\Code.exe ; run vscode
 
-<^>!w:: 
+<^>!w:: ; open incognito
   Run, cmd.exe
   Sleep, 200
   Send, start chrome /incognito{Enter}
@@ -64,11 +54,10 @@ Return
   ControlSend,, exit{Enter}, ahk_exe cmd.exe
 Return
 
-<^>!x:: Run, https://james-hackett.ie/pages/links/
-Return
+<^>!x:: Run, https://james-hackett.ie/pages/links/ ; useful links
 
-if (WinActive("ahk_exe discord.exe")) {
-<^>!p::
+#IfWinActive, ahk_exe DiscordCanary.exe
+<^>!p:: ; send ip
   WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
   WebRequest.Open("GET", "http://ip.jsontest.com/")
   WebRequest.Send()
@@ -78,10 +67,9 @@ if (WinActive("ahk_exe discord.exe")) {
   Send, {Text}%newIP%
   WebRequest := ""
 Return
-}
 
-if (WinActive("ahk_exe chrome.exe")) {
-<^>l::
+#IfWinActive, ahk_exe chrome.exe
+<^>!l:: ; login to DCU
   FileRead, pword, ..\password.txt
   FileRead, uname, ..\username.txt
   Sleep, 200
@@ -93,16 +81,9 @@ if (WinActive("ahk_exe chrome.exe")) {
   Sleep, 50
   Send, {Enter}
 Return
-}
 
-if (WinActive("ahk_exe Code.exe")) { ; shortcuts for VSCode
-<^>d::
-  Send, ^k
-  Sleep, 50
-  Send, ^!d
-Return
-
-<^>!l:: ; log in to DCU
+#IfWinActive, ahk_exe Code.exe
+<^>!l:: ; login to DCU
   FileRead, pword, ..\password.txt
   FileRead, uname, ..\username.txt
   Sleep, 200
@@ -116,20 +97,23 @@ Return
 Return
 
 <^>!u:: ; upload to Einstein
-  Send, ^k
-  Sleep, 50
-  Send, ^!u
+  if (WinActive("ahk_exe Code.exe")) {
+    Send, ^k
+    Sleep, 50
+    Send, ^!u
+  }
 Return
-}
 
-<^>!NumpadSub::
+#IfWinActive
+<^>!NumpadSub:: ; gets active window
   WinGetClass, class, A
   MsgBox, The active window's class is "%class%".
 Return
 
-#ScrollLock::Suspend ; Win + scrollLock
+#ScrollLock::Suspend ; suspend script
 
 ; ~^s::
 ;   ToolTip, RELOADING...
 ;   Sleep, 300
 ;   Reload
+Return
