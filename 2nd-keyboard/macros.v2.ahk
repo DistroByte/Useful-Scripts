@@ -24,7 +24,7 @@ Capslock::Shift
 
 <^>!Numpad2::Send, {PrintScreen} ; ALTGR + Num2 capture monitor
 
-<^>!b::Run, "C:\Program Files\Avidemux 2.7 VC++ 64bits\avidemux.exe" ; ALTGR + B runs avidemux: video editor
+<^>!a::Run, "C:\Program Files\Adobe\Adobe Premiere Pro 2020\Adobe Premiere Pro.exe" ; ALTGR + A runs Premiere Pro: video editor
 
 <^>!c:: ; ALTGR + C open calculator
   if !WinExist("Calculator") {
@@ -59,17 +59,19 @@ Return
   Run, http://www.google.com/search?q=%clipboard%
 Return
 
-<^>!t:: Run, https://md.james-hackett.ie/s/cPWKnj0kN ; ALTGR + T open semester 2 timetable page
+<^>!t:: Run, https://md.james-hackett.ie/19i4gAB5QHKuOHL1DY3hQA?both ; ALTGR + T open semester 2 timetable page
 
 <^>!v:: Run, C:\Users\James\AppData\Local\Programs\Microsoft VS Code\Code.exe ; ALTGR + V run vscode
 
 <^>!w:: ; ALTGR + W open incognito
   Run, cmd.exe
   Sleep, 200
-  Send, start chrome /incognito{Enter}
-  WinWait, ahk_exe chrome.exe
+  Send, start firefox /incognito{Enter}
+  WinWait, ahk_exe firefox.exe
   ControlSend,, exit{Enter}, ahk_exe cmd.exe
 Return
+
+<^>!,::Run, https://www.netflix.com/browse
 
 <^>!.:: WinMinimize, A
 
@@ -93,7 +95,7 @@ Return
   WebRequest := ""
 Return
 
-#IfWinActive, ahk_exe chrome.exe
+#IfWinActive, ahk_exe firefox.exe
 <^>!l:: ; ALTGR + L login to DCU
   FileRead, pword, ..\password.txt
   FileRead, uname, ..\username.txt
@@ -122,11 +124,10 @@ Return
 Return
 
 <^>!u:: ; ALTGR + U upload to Einstein
-  if (WinActive("ahk_exe Code.exe")) {
-    Send, ^k
-    Sleep, 50
-    Send, ^!u
-  }
+  Sleep, 400
+  Send, ^k
+  Sleep, 100
+  Send, ^!u
 Return
 
 #IfWinActive
@@ -135,10 +136,47 @@ Return
   MsgBox, The active window's class is "%class%".
 Return
 
+<^>!NumpadAdd::
+  Process, Exist, getxp.exe 
+  NewPID = %ErrorLevel%
+  If (NewPID = 0)
+  {
+    Run, C:\Users\James\Documents\Useful Scripts\2nd-keyboard\getxp.exe
+    Return
+  }
+  Else 
+  {
+    Runwait, taskkill /im getxp.exe /f
+    Return
+  }
+Return
+
 #ScrollLock::Suspend ; Windows + Scroll Lock suspend script
 
-; ~^s::
+; $esc::
+;   KeyWait,esc,T0.5 ;wait 0.5 seconds for release key
+;   If (ErrorLevel) ;more than 0.5 sec have passed
+;   {
+;     Send {esc}
+;     keyHeld = 1
+;     KeyWait,esc
+;   }
+; Return
+
+; $esc up::
+;   If (keyHeld = 0) ;If not held down
+;     Send ``
+;   Else
+;     keyHeld = 0
+; Return
+
+; shift & esc::
+;   Send |
+;   keyHeld = 1
+; Return
+
+; <^>!#::
 ;   ToolTip, RELOADING...
 ;   Sleep, 300
 ;   Reload
-Return
+; Return
